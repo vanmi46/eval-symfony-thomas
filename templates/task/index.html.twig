@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des tâches{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Liste des tâches</h1>
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+
+    <p>
+        <a href="{{ path('task_new') }}">Ajouter une tâche</a>
+    </p>
+
+    {% if tasks is empty %}
+        <p>Aucune tâche.</p>
+    {% else %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Contenu</th>
+                    <th>Créée le</th>
+                    <th>Expire le</th>
+                    <th>Terminée</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in tasks %}
+                    <tr>
+                        <td>{{ task.title }}</td>
+                        <td>{{ task.content }}</td>
+                        <td>{{ task.createdAt ? task.createdAt|date('d/m/Y H:i') : '' }}</td>
+                        <td>{{ task.expiredAt ? task.expiredAt|date('d/m/Y H:i') : '' }}</td>
+                        <td>{{ task.status ? 'Oui' : 'Non' }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</div>
+{% endblock %}
