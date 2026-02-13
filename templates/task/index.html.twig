@@ -3,19 +3,22 @@
 {% block title %}Liste des tâches{% endblock %}
 
 {% block body %}
-<div class="container">
-    <h1>Liste des tâches</h1>
+<article>
+    <header>
+        <h1>Liste des tâches</h1>
+        <p>Gestion simple des tâches (évaluation Symfony)</p>
+
+        <a href="{{ path('task_new') }}" role="button">
+            Ajouter une tâche
+        </a>
+    </header>
 
     {% for message in app.flashes('success') %}
-        <div class="alert alert-success">{{ message }}</div>
+        <mark>{{ message }}</mark>
     {% endfor %}
 
-    <p>
-        <a href="{{ path('task_new') }}">Ajouter une tâche</a>
-    </p>
-
     {% if tasks is empty %}
-        <p>Aucune tâche.</p>
+        <p>Aucune tâche enregistrée.</p>
     {% else %}
         <table>
             <thead>
@@ -30,15 +33,23 @@
             <tbody>
                 {% for task in tasks %}
                     <tr>
-                        <td>{{ task.title }}</td>
+                        <td><strong>{{ task.title }}</strong></td>
                         <td>{{ task.content }}</td>
-                        <td>{{ task.createdAt ? task.createdAt|date('d/m/Y H:i') : '' }}</td>
-                        <td>{{ task.expiredAt ? task.expiredAt|date('d/m/Y H:i') : '' }}</td>
-                        <td>{{ task.status ? 'Oui' : 'Non' }}</td>
+                        <td>{{ task.createdAt|date("d/m/Y H:i") }}</td>
+                        <td>
+                            {{ task.expiredAt ? task.expiredAt|date("d/m/Y H:i") : "—" }}
+                        </td>
+                        <td>
+                            {% if task.status %}
+                                Oui
+                            {% else %}
+                                Non
+                            {% endif %}
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
     {% endif %}
-</div>
+</article>
 {% endblock %}

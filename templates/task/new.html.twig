@@ -3,12 +3,11 @@
 {% block title %}Ajouter une tâche{% endblock %}
 
 {% block body %}
-<div class="container">
-    <h1>Ajouter une tâche</h1>
-
-    <p>
-        <a href="{{ path('task_index') }}">← Retour à la liste</a>
-    </p>
+<article>
+    <header>
+        <h1>Ajouter une tâche</h1>
+        <p>Remplis le formulaire ci-dessous.</p>
+    </header>
 
     {{ form_start(form) }}
         {{ form_row(form.title) }}
@@ -17,6 +16,9 @@
         {{ form_row(form.status) }}
 
         <button type="submit">Enregistrer</button>
+        <a href="{{ path('task_index') }}" role="button" class="secondary">
+            Annuler
+        </a>
     {{ form_end(form) }}
-</div>
+</article>
 {% endblock %}
